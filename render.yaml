@@ -1,0 +1,39 @@
+services:
+  - type: web
+    name: n8n
+    env: node
+    region: frankfurt # change si tu veux (frankfurt, oregon, singapore, etc.)
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: n8n start
+    envVars:
+      - key: N8N_BASIC_AUTH_ACTIVE
+        value: "true"
+      - key: N8N_BASIC_AUTH_USER
+        value: "admin"
+      - key: N8N_BASIC_AUTH_PASSWORD
+        value: "motdepassefort"   # 🔒 change-moi !
+      - key: WEBHOOK_URL
+        value: "https://n8n-onrender.onrender.com/" # 🔁 à mettre à jour après le déploiement
+      - key: N8N_ENCRYPTION_KEY
+        value: "1234567890abcdef1234567890abcdef"   # génère une clé aléatoire de 32 caractères
+      - key: DB_TYPE
+        value: "postgresdb"
+      - key: DB_POSTGRESDB_HOST
+        value: "db.xxxxxx.supabase.co"  # 👉 ton host Supabase
+      - key: DB_POSTGRESDB_PORT
+        value: "5432"
+      - key: DB_POSTGRESDB_DATABASE
+        value: "postgres"
+      - key: DB_POSTGRESDB_USER
+        value: "postgres"
+      - key: DB_POSTGRESDB_PASSWORD
+        value: "ton_mot_de_passe_supabase"
+      - key: DB_POSTGRESDB_SSL_CA
+        value: "/etc/ssl/certs/ca-certificates.crt"
+      - key: GENERIC_TIMEZONE
+        value: "Europe/Paris"
+      - key: EXECUTIONS_PROCESS
+        value: "main"
+    healthCheckPath: /
+    autoDeploy: true
